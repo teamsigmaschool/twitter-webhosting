@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, useCallback } from "react";
 import { auth,db,storage } from "../firebase";
 import { getDownloadURL,ref,uploadBytes } from "firebase/storage";
-import {collection,doc,getDoc,getDocs,setDoc,updateDoc } from 'firebase/firestore'
+import {collection,doc,getDoc,getDocs,setDoc,updateDoc, deleteDoc } from 'firebase/firestore'
 
 export const AuthContext = createContext();
 
@@ -127,6 +127,17 @@ const updatePost = useCallback(
   [uploadFile]
 );
 
+const deletePost = useCallback(async (userId, postId) => {
+  try {
+    const postRef = doc(db, `users/${userId}/posts/${postId}`);
+    await deleteDoc(postRef);
+
+    setPosts((prev) => prev.filter((post) => post.id !== postId));
+  } catch (error) {
+    console.error(error);
+  }
+}, []);
+
 
 const value = {
   currentUser,
@@ -135,6 +146,7 @@ const value = {
   fetchPostsByUser,
   savePost,
   updatePost,
+  deletePost,
   likePost,
   removeLikeFromPost,
 };

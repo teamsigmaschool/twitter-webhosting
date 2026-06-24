@@ -5,7 +5,7 @@ import UpdatePostModal from "./UpdatePostModal"
 
 export default function ProfilePostCard({ post}) {
   const { content, id: postId, likes: postLikes = [], imageUrl } = post;
-  const { currentUser, likePost, removeLikeFromPost } = useContext(AuthContext);
+  const { currentUser, likePost, removeLikeFromPost, deletePost } = useContext(AuthContext);
   const userId = currentUser?.uid;
   const [likes,setLikes] = useState(postLikes || [])
   const [showUpdateModal, setShowUpdateModal] = useState(false)
@@ -27,6 +27,11 @@ export default function ProfilePostCard({ post}) {
       likePost(userId, postId);
     }
   };
+
+  const handleDelete = ()=>{
+    if(!userId) return;
+    deletePost(userId,postId);
+  }
 
   return (
     <Row
@@ -66,7 +71,7 @@ export default function ProfilePostCard({ post}) {
           <Button variant="light" onClick={handleShowUpdateModal}>
             <i className="bi bi-pencil-square"></i>
           </Button>
-          <Button variant="light">
+          <Button variant="light" onClick={handleDelete}>
             <i className="bi bi-trash"></i>
           </Button>
         </div>
