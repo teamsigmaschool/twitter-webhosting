@@ -8,6 +8,7 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
+  //previously, VITE_API_KEY AIzaSyDIyyZeA1d20xclJ9AQIYUSCfqBDXEg-ug
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_PROJECT_ID,
